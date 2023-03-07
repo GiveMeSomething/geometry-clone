@@ -3,6 +3,6 @@
 [Serializable]
 public class MapPatternFile
 {
-	public MapPattern[] mapPatterns;
+	public MapPattern[] MapPatterns;
 }
 

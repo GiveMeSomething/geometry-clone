@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 // File for storing resource settings and load functions
@@ -7,10 +8,11 @@ public class ResourceLoader
     // Dictionary to save loaded resources
     private static readonly Dictionary<string, object> _resMap = new();
     
-    private const string MAP_PATTERN_FILE = "Resources/Settings/Map/maps.json";
+    private const string MAP_PATTERN_FILE = "Settings/Map/map";
 
-    private const string MAP_COHESION_FILE = "Resources/Settings/Map/cohesion.json";
+    private const string MAP_COHESION_FILE = "Settings/Map/cohesion";
 
+    // TODO: Check if this can be loaded asynchronusly
     private static T LoadJsonTextResource<T>(string filePath)
     {
         if(_resMap.TryGetValue(filePath, out var resource))
@@ -19,6 +21,11 @@ public class ResourceLoader
         }
 
         var settings = Resources.Load<TextAsset>(filePath);
+        if(settings == null)
+        {
+            throw new Exception($"File not found at location {filePath}");
+        }
+
         return JsonUtility.FromJson<T>(settings.text);
     }
 

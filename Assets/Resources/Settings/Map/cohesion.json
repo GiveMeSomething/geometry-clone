@@ -1,8 +1,8 @@
 ﻿{
-    "cohesions": [
+    "MapCohesions": [
         {
-            "id": 0,
-            "suitableMaps": [ 0 ]
+            "Id": 0,
+            "SuitableMaps": [ 0 ]
         }
     ]
 }

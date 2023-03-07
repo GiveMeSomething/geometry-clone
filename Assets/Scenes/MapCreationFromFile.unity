@@ -251,6 +251,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be2ce7ffa2e24232bb278f2105008d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _placeables:
+  - ObjectCode: 1
+    GameObjectPrefab: {fileID: 6176362695079094300, guid: 03701d0f6b12e422da17ea7cdd42e443, type: 3}
+  - ObjectCode: 2
+    GameObjectPrefab: {fileID: 8627949627266174454, guid: d5e52c4c23c8a4ffbbf594390aae2224, type: 3}
+  - ObjectCode: 3
+    GameObjectPrefab: {fileID: 806984675358935825, guid: f442c8d5863a74eb4854c17030aaedd9, type: 3}
 --- !u!1 &659992917
 GameObject:
   m_ObjectHideFlags: 0

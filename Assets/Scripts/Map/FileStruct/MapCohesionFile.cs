@@ -3,6 +3,6 @@
 [Serializable]
 public class MapCohesionFile
 {
-	public MapCohesion[] cohesions;
+	public MapCohesion[] MapCohesions;
 }
 

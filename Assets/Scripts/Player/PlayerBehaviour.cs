@@ -16,6 +16,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         this._state.Moving();
     }
+    public void DoNotThing()
+    {
+        this._state.DoNotThing();
+    }
 
     public void GoThroughPortal()
     {
@@ -31,7 +35,13 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.Move();
+        if (Input.GetKey(KeyCode.Space))
+        {
+            this.Move();
+        }
+        else {
+            this.DoNotThing();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -13,13 +13,17 @@ public class NormalState : PlayerState
     public override void Moving()
     {
         //TODO: Make character jump
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Debug.Log("Jump");
-        }
+        Debug.Log("Jump");
+        
+    }
+    public override void DoNotThing()
+    {
+        //Do not thing
     }
     public override void GoThroughPortal()
     {
         this._playerBehaviour.TransitionTo(new FlyingState());
     }
+
+    
 }

@@ -12,14 +12,12 @@ public class FlyingState : PlayerState
     }
     public override void Moving()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            this._gameObject.transform.Translate(new Vector3(0, this._playerBehaviour.speed * Time.deltaTime, 0));
-        }
-        else
-        {
-            this._gameObject.transform.Translate(new Vector3(0, this._playerBehaviour.speed * Time.deltaTime * -1, 0));
-        }
+
+        this._gameObject.transform.Translate(new Vector3(0, this._playerBehaviour.speed * Time.deltaTime, 0));
+    }
+    public override void DoNotThing()
+    {
+        this._gameObject.transform.Translate(new Vector3(0, this._playerBehaviour.speed * Time.deltaTime * -1, 0));
     }
     public override void GoThroughPortal()
     {

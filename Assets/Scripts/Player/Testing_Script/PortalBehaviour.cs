@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PortBehaviour : MonoBehaviour
+public class PortalBehaviour : MonoBehaviour
 {
     [SerializeField]
     public float speed;

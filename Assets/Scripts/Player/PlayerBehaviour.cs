@@ -17,9 +17,9 @@ public class PlayerBehaviour : MonoBehaviour
         this._state.Moving();
     }
 
-    public void GoThoughPort()
+    public void GoThroughPortal()
     {
-        this._state.GoThoughPort();
+        this._state.GoThroughPortal();
     }
     // Start is called before the first frame update
     void Start()
@@ -36,9 +36,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.transform.name.Equals("Port"))
+        if (collision.collider.transform.name.Equals("Portal"))
         {
-            this.GoThoughPort();
+            this.GoThroughPortal();
         }
     }
 }

@@ -21,7 +21,7 @@ public class FlyingState : PlayerState
             this._gameObject.transform.Translate(new Vector3(0, this._playerBehaviour.speed * Time.deltaTime * -1, 0));
         }
     }
-    public override void GoThoughPort()
+    public override void GoThroughPortal()
     {
         this._playerBehaviour.TransitionTo(new NormalState());
     }

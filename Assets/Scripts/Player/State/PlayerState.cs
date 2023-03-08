@@ -15,5 +15,5 @@ public abstract class PlayerState
     }
     public abstract void SetUpEnviroment();
     public abstract void Moving();
-    public abstract void GoThoughPort();
+    public abstract void GoThroughPortal();
 }

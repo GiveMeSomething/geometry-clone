@@ -18,7 +18,7 @@ public class NormalState : PlayerState
             Debug.Log("Jump");
         }
     }
-    public override void GoThoughPort()
+    public override void GoThroughPortal()
     {
         this._playerBehaviour.TransitionTo(new FlyingState());
     }

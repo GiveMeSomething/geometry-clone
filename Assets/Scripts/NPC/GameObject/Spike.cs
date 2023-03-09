@@ -14,16 +14,9 @@ public class Spike : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        BlockFlyweightFactory flyweightFactory = BlockFlyweightFactory.GetInstance();
-        _flyweight = flyweightFactory.GetFlyweight(this.GetType());
+        _flyweight = BuildingBlock.GetFlyweight(this.GetType());
 
-
-        if (_flyweight == null)
-        {
-            throw new Exception($"Cannot resolve flyweight type for {this.GetType().ToString()}");
-        }
-
-        if (_rigidbody == null)
+        if (!TryGetComponent<Rigidbody2D>(out _rigidbody))
         {
             throw new Exception("Cannot resolve component Rigidbody2D. Please check object/prefab");
         }

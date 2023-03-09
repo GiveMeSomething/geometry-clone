@@ -14,7 +14,7 @@ public abstract class PlayerState
         this.SetUpEnviroment();
     }
     public abstract void SetUpEnviroment();
-    public abstract void Moving();
-    public abstract void DoNotThing();
+    public abstract void HandleUserSingleTouch();
+    public abstract void Move();
     public abstract void GoThroughPortal();
 }

@@ -12,13 +12,13 @@ public class PlayerBehaviour : MonoBehaviour
         this._state = state;
         this._state.SetContext(this);
     }
+    public void HandleUserSingleTouch()
+    {
+        this._state.HandleUserSingleTouch();
+    }
     public void Move()
     {
-        this._state.Moving();
-    }
-    public void DoNotThing()
-    {
-        this._state.DoNotThing();
+        this._state.Move();
     }
 
     public void GoThroughPortal()
@@ -37,11 +37,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            this.Move();
+            this.HandleUserSingleTouch();
         }
-        else {
-            this.DoNotThing();
-        }
+        this.Move();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

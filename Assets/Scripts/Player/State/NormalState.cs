@@ -9,6 +9,7 @@ public class NormalState : PlayerState
         //TODO: Set up the enviroment
         Debug.Log("Normal Enviroment");
         this._gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+        _childGameObject.transform.localScale = new Vector3(0, 0, 0);
     }
     public override void HandleUserSingleTouch()
     {
@@ -25,5 +26,8 @@ public class NormalState : PlayerState
         this._playerBehaviour.TransitionTo(new FlyingState());
     }
 
-    
+    public override void OnCollisionEnter(Collision2D collision)
+    {
+        
+    }
 }

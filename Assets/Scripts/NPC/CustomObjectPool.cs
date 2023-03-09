@@ -19,8 +19,8 @@ public class CustomObjectPool
             {
                 _objectPool = new ObjectPool<GameObject>(
                     CreatePoolItem,
-                    OnReturnedToPool,
                     OnTakeFromPool,
+                    OnReturnedToPool,
                     OnDestroyGameObject,
                     collectionCheck, maxPoolSize); ;
             }
@@ -37,8 +37,6 @@ public class CustomObjectPool
     private GameObject CreatePoolItem()
     {
         var newObject = GameObject.Instantiate(_targetPrefab);
-        newObject.SetActive(false);
-
         return newObject;
     }
 

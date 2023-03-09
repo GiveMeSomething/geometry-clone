@@ -5,8 +5,8 @@ using UnityEngine;
 [Serializable]
 class Placeable
 {
-    public int ObjectCode;
-    public GameObject GameObjectPrefab;
+    public int BlockCode;
+    public BlockType BlockType;
 }
 
 // Screen size: 20*10
@@ -36,9 +36,12 @@ public class MapManager : MonoBehaviour
     private List<MapCohesion> _mapCohesions;
 
     [SerializeField]
+    private NPCManager _npcManager;
+
+    [SerializeField]
     private List<Placeable> _placeables = new();
 
-    private Dictionary<int, GameObject> _placeableMap = new();
+    private Dictionary<int, BlockType> _placeableMap = new();
 
     private void Awake()
     {
@@ -64,7 +67,7 @@ public class MapManager : MonoBehaviour
         // Map game blocks into a dictionary
         foreach(Placeable placeable in _placeables)
         {
-            _placeableMap.Add(placeable.ObjectCode, placeable.GameObjectPrefab);
+            _placeableMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
         // TODO: Remove this after tested
@@ -94,13 +97,13 @@ public class MapManager : MonoBehaviour
         {
             for (int j = 0; j < length; j++)
             {
-                var currentValue = data[i * length + j];
-                if (currentValue == 0)
+                var currentCode = data[i * length + j];
+                if (currentCode == 0)
                 {
                     continue;
                 }
 
-                if(_placeableMap.TryGetValue(currentValue, out var placeable))
+                if(_placeableMap.TryGetValue(currentCode, out var blockType))
                 {
                     var instantiatePos = new Vector3(
                         transform.position.x + j + SCREEN_OFFSET_X + OBJECT_OFFSET,
@@ -108,8 +111,10 @@ public class MapManager : MonoBehaviour
                         transform.position.z
                     );
 
-                    // TODO: Move this into respective ObjectPool/Factory
-                    Instantiate(placeable, instantiatePos, transform.rotation);
+                    var currentObjectPool = _npcManager.GetObjectPool(blockType);
+                    currentObjectPool.Pool.Get(out var placeable);
+
+                    placeable.transform.position = instantiatePos;
                 }
             }
         }

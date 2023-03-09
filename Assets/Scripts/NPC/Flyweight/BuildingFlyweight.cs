@@ -5,7 +5,7 @@ public class BuildingFlyweight : IBlockFlyweight
 {
     public void HandleCollision(Collision2D collision)
     {
-        if(collision.transform.CompareTag(GameTag.Player) {
+        if(collision.transform.CompareTag(GameTag.Player)) {
             ContactPoint2D contactPoint = collision.contacts[0];
 
             Vector2 normalized = contactPoint.normal;

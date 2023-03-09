@@ -2,7 +2,7 @@
 
 public class BuildingBlock
 {
-    public static IBlockFlyweight GetFlyweight(Type type)
+    public static IBlockFlyweight GetFlyweight(BlockCategory type)
     {
         BlockFlyweightFactory flyweightFactory = BlockFlyweightFactory.GetInstance();
         var flyweight = flyweightFactory.GetFlyweight(type);

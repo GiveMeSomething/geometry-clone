@@ -14,12 +14,12 @@ public class Spike : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        _flyweight = BuildingBlock.GetFlyweight(this.GetType());
+        _flyweight = BuildingBlock.GetFlyweight(BlockCategory.Obstacle);
 
-        if (!TryGetComponent<Rigidbody2D>(out _rigidbody))
-        {
-            throw new Exception("Cannot resolve component Rigidbody2D. Please check object/prefab");
-        }
+        //if (!TryGetComponent<Rigidbody2D>(out _rigidbody))
+        //{
+        //    throw new Exception("Cannot resolve component Rigidbody2D. Please check object/prefab");
+        //}
     }
 
     // Update is called once per frame

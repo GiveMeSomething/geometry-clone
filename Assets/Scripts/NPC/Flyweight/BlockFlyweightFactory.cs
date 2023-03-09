@@ -6,28 +6,28 @@ public class BlockFlyweightFactory
 {
     private static BlockFlyweightFactory _instance = null;
 
-    private readonly Dictionary<Type, IBlockFlyweight> _flyweightMap;
+    private readonly Dictionary<BlockCategory, IBlockFlyweight> _flyweightMap;
 
     private BlockFlyweightFactory()
     {
         _flyweightMap = new();
     }
 
-    public IBlockFlyweight GetFlyweight(Type key)
+    public IBlockFlyweight GetFlyweight(BlockCategory key)
     {
         if (_flyweightMap.TryGetValue(key, out var flyweight))
         {
             return flyweight;
         }
 
-        if (key == typeof(Cube) || key == typeof(Slab))
+        if (key == BlockCategory.BuildingBlock)
         {
             flyweight = new BuildingFlyweight();
             _flyweightMap.Add(key, flyweight);
             return flyweight;
         }
 
-        if (key == typeof(Spike))
+        if (key == BlockCategory.Obstacle)
         {
             flyweight = new ObstacleFlyweight();
             _flyweightMap.Add(key, flyweight);

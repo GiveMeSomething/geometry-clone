@@ -17,8 +17,9 @@ class Placeable
 // (20*10) - (20*2) = (20*8)
 public class MapManager : MonoBehaviour
 {
-    // Renderable screen area height
+    // Renderable screen area
     private const int PLAY_SCREEN_HEIGHT = 8;
+    private const int PLAY_SCREEN_WIDTH = 20;
 
     // The screen use its center as its pivot,
     // so it goes from -10 -> 10 on x axis and -5 -> 5 on y axis
@@ -34,6 +35,13 @@ public class MapManager : MonoBehaviour
 
     private List<MapPattern> _mapPatterns;
     private List<MapCohesion> _mapCohesions;
+
+
+    private float _mapCoverTime;
+    private MapPattern _currentMapPattern;
+
+    private MapPattern _nextMapPattern;
+    private bool renderable = true;
 
     [SerializeField]
     private NPCManager _npcManager;
@@ -70,10 +78,33 @@ public class MapManager : MonoBehaviour
             _placeableMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
-        // TODO: Remove this after tested
-        var currentPattern = _mapPatterns.Find(pattern => pattern.Id == 1);
-        ValidateMap(currentPattern.Data, currentPattern.MapLen);
-        GenerateMap(currentPattern.Data, currentPattern.MapLen);
+        SetCurrentMapPattern(_mapPatterns.Find(pattern => pattern.Id == 1));
+        _nextMapPattern = _mapPatterns.Find(pattern => pattern.Id == 1);
+    }
+
+    private void FixedUpdate()
+    {
+        // Time it take to current map pattern to finish on screen
+        if (renderable)
+        {
+            GenerateMap(_currentMapPattern);
+            renderable = false;
+        }
+
+        _mapCoverTime -= Time.deltaTime;
+        if (_mapCoverTime > 0)
+        {
+            return;
+        }
+
+        // TODO: Remove after test
+        // ==================================
+        var temp = _currentMapPattern;
+        SetCurrentMapPattern(_nextMapPattern);
+        _nextMapPattern = temp;
+        // ==================================
+
+        renderable = true;
     }
 
     private void ValidateMap(int[] data, int length)
@@ -90,8 +121,11 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void GenerateMap(int[] data, int length)
+    private void GenerateMap(MapPattern mapPattern)
     {
+        var data = mapPattern.Data;
+        var length = mapPattern.MapLen;
+
         var row = data.Length / length;
         for(int i = 0; i < row; i++)
         {
@@ -106,7 +140,7 @@ public class MapManager : MonoBehaviour
                 if(_placeableMap.TryGetValue(currentCode, out var blockType))
                 {
                     var instantiatePos = new Vector3(
-                        transform.position.x + j + SCREEN_OFFSET_X + OBJECT_OFFSET,
+                        transform.position.x + j + SCREEN_OFFSET_X + OBJECT_OFFSET + PLAY_SCREEN_WIDTH,
                         transform.position.y + i + SCREEN_OFFSET_Y + OBJECT_OFFSET,
                         transform.position.z
                     );
@@ -118,6 +152,16 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void SetCurrentMapPattern(MapPattern mapPattern)
+    {
+        if(mapPattern != null)
+        {
+            _mapCoverTime = mapPattern.MapLen / GameConst.PLATFORM_SPEED;
+        }
+
+        _currentMapPattern = mapPattern;
     }
 }
 

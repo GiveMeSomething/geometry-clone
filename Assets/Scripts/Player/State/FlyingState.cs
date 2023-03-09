@@ -10,6 +10,7 @@ public class FlyingState : PlayerState
         //TODO: Set up the enviroment
         Debug.Log("Flying Enviroment");
         this._gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        _childGameObject.transform.localScale = new Vector3(1.5f, 0.2f, 0);
     }
     public override void HandleUserSingleTouch()
     {
@@ -29,5 +30,11 @@ public class FlyingState : PlayerState
         this._playerBehaviour.TransitionTo(new NormalState());
     }
 
-
+    public override void OnCollisionEnter(Collision2D collision)
+    {
+        if (collision.transform.name.Equals("Spike"))
+        {
+            _playerBehaviour.Destroy();
+        }
+    }
 }

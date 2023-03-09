@@ -48,5 +48,13 @@ public class PlayerBehaviour : MonoBehaviour
         {
             this.GoThroughPortal();
         }
+        else
+        {
+            this._state.OnCollisionEnter(collision);
+        }
+    }
+    public void Destroy()
+    {
+        Debug.Log("End Game");
     }
 }

@@ -18,6 +18,18 @@ public class NormalState : PlayerState
     {
         //TODO: Make character jump
         //Debug.Log("Jump");
+        if (this.IsGrounded)
+        {
+            this._playerBehaviour.rb.velocity = Vector3.zero;
+            this._playerBehaviour.rb.AddForce(Vector2.up * this._playerBehaviour.jumpSpeed);
+            this.IsGrounded = false;
+
+            
+        }
+    }
+    public override void Move()
+    {
+        //Do not thing
         if(this.IsGrounded)
         {
             Debug.Log("Grounded");
@@ -28,16 +40,8 @@ public class NormalState : PlayerState
             Debug.Log(Rotation);
 
             this._playerBehaviour.Sprite.rotation = Quaternion.Euler(Rotation);
-
-            this._playerBehaviour.rb.velocity = Vector3.zero;
-            this._playerBehaviour.rb.AddForce(Vector2.up * this._playerBehaviour.jumpSpeed);
-            this.IsGrounded= false;
         }
-    }
-    public override void Move()
-    {
-        //Do not thing
-        if(!this.IsGrounded)
+        if (!this.IsGrounded)
         {
             this._playerBehaviour.Sprite.Rotate(Vector3.back * 0.8f);
         }

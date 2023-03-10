@@ -16,26 +16,26 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerState _state;
     public void TransitionTo(PlayerState state)
     {
-        this._state = state;
-        this._state.SetContext(this);
+        _state = state;
+        _state.SetContext(this);
     }
     public void HandleUserSingleTouch()
     {
-        this._state.HandleUserSingleTouch();
+        _state.HandleUserSingleTouch();
     }
     public void Move()
     {
-        this._state.Move();
+        _state.Move();
     }
 
     public void GoThroughPortal()
     {
-        this._state.GoThroughPortal();
+        _state.GoThroughPortal();
     }
     // Start is called before the first frame update
     void Start()
     {
-        this.TransitionTo(new NormalState());
+        TransitionTo(new NormalState());
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -44,20 +44,20 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            this.HandleUserSingleTouch();
+            HandleUserSingleTouch();
         }
-        this.Move();
+        Move();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.transform.name.Equals("Portal"))
         {
-            this.GoThroughPortal();
+            GoThroughPortal();
         }
         else
         {
-            this._state.OnCollisionEnter(collision);
+            _state.OnCollisionEnter(collision);
         }
     }
     public void Destroy()

@@ -6,6 +6,13 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField]
     public float speed;
+
+    [SerializeField]
+    public float jumpSpeed;
+
+    public Rigidbody2D rb;
+    public Transform Sprite;
+
     private PlayerState _state;
     public void TransitionTo(PlayerState state)
     {
@@ -29,7 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         this.TransitionTo(new NormalState());
-
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame

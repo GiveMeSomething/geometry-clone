@@ -9,7 +9,7 @@ public class CustomObjectPool
     private GameObject _targetPrefab;
 
     private bool collectionCheck = true;
-    private int maxPoolSize = 10;
+    private int maxPoolSize = 30;
 
     public IObjectPool<GameObject> Pool
     {

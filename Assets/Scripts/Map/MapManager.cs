@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using System;
 using UnityEngine;
 
@@ -33,23 +34,27 @@ public class MapManager : MonoBehaviour
     // We need to offset those different so we can place blocks at the right place
     private const float OBJECT_OFFSET = 0.5f;
 
-    private List<MapPattern> _mapPatterns;
-    private List<MapCohesion> _mapCohesions;
+    // The full-time needed to cover a full width pattern, based on PLATFORM_SPEED
+    private float _mapPatternCoverTime = (float)PLAY_SCREEN_WIDTH / GameConst.PLATFORM_SPEED;
 
-
-    private float _mapCoverTime;
-    private MapPattern _currentMapPattern;
-
-    private MapPattern _nextMapPattern;
-    private bool renderable = true;
-
+    // Reference to NPC Manager to access its ObjectPools
     [SerializeField]
     private NPCManager _npcManager;
 
     [SerializeField]
     private List<Placeable> _placeables = new();
 
-    private Dictionary<int, BlockType> _placeableMap = new();
+    private Dictionary<int, BlockType> _placeableCodeMap = new();
+
+    // Data for map patterns and map cohesions
+    private List<MapPattern> _mapPatterns;
+    private List<MapCohesion> _mapCohesions;
+
+    // Data for map streaming
+    private MapPattern _currentMapPattern;
+    private MapPattern _nextMapPattern;
+    private bool renderable = true;
+    private float _mapCoverTime;
 
     private void Awake()
     {
@@ -73,13 +78,14 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // Map game blocks into a dictionary
-        foreach(Placeable placeable in _placeables)
+        foreach (Placeable placeable in _placeables)
         {
-            _placeableMap.Add(placeable.BlockCode, placeable.BlockType);
+            _placeableCodeMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
         SetCurrentMapPattern(_mapPatterns.Find(pattern => pattern.Id == 1));
         _nextMapPattern = _mapPatterns.Find(pattern => pattern.Id == 1);
+
     }
 
     private void FixedUpdate()
@@ -92,6 +98,13 @@ public class MapManager : MonoBehaviour
         }
 
         _mapCoverTime -= Time.deltaTime;
+        _mapPatternCoverTime -= Time.deltaTime;
+
+        if(_mapPatternCoverTime <= 0)
+        {
+
+        }
+
         if (_mapCoverTime > 0)
         {
             return;
@@ -109,13 +122,13 @@ public class MapManager : MonoBehaviour
 
     private void ValidateMap(int[] data, int length)
     {
-        if(data.Length % length != 0)
+        if (data.Length % length != 0)
         {
             throw new Exception($"Map data is not compatible with length: {length}");
         }
 
         var row = data.Length / length;
-        if(row > PLAY_SCREEN_HEIGHT)
+        if (row > PLAY_SCREEN_HEIGHT)
         {
             throw new Exception("Unable to render map with over 8 rows");
         }
@@ -127,7 +140,9 @@ public class MapManager : MonoBehaviour
         var length = mapPattern.MapLen;
 
         var row = data.Length / length;
-        for(int i = 0; i < row; i++)
+
+        List<Action> cleanupActions = new();
+        for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < length; j++)
             {
@@ -137,7 +152,7 @@ public class MapManager : MonoBehaviour
                     continue;
                 }
 
-                if(_placeableMap.TryGetValue(currentCode, out var blockType))
+                if (_placeableCodeMap.TryGetValue(currentCode, out var blockType))
                 {
                     var instantiatePos = new Vector3(
                         transform.position.x + j + SCREEN_OFFSET_X + OBJECT_OFFSET + PLAY_SCREEN_WIDTH,
@@ -149,19 +164,30 @@ public class MapManager : MonoBehaviour
                     currentObjectPool.Pool.Get(out var placeable);
 
                     placeable.transform.position = instantiatePos;
+
+                    cleanupActions.Add(() => currentObjectPool.Pool.Release(placeable));
                 }
             }
         }
+
+        StartCoroutine(ReleaseAfterSeconds((PLAY_SCREEN_WIDTH + mapPattern.MapLen) / GameConst.PLATFORM_SPEED, cleanupActions));
     }
 
     private void SetCurrentMapPattern(MapPattern mapPattern)
     {
-        if(mapPattern != null)
-        {
-            _mapCoverTime = mapPattern.MapLen / GameConst.PLATFORM_SPEED;
-        }
-
+        // Calculate new map pattern info
+        _mapCoverTime = mapPattern.MapLen / GameConst.PLATFORM_SPEED;
         _currentMapPattern = mapPattern;
+    }
+
+    private IEnumerator ReleaseAfterSeconds(float seconds, List<Action> actions)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        foreach(Action action in actions)
+        {
+            action.Invoke();
+        }
     }
 }
 

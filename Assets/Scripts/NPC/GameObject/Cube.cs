@@ -11,8 +11,15 @@ public class Cube : MonoBehaviour
 
 	private Rigidbody2D _rigidbody;
 
-	// Use this for initialization
-	private void Start()
+	private Vector3 originalPos;
+
+    private void Awake()
+    {
+        originalPos = transform.localPosition;
+    }
+
+    // Use this for initialization
+    private void Start()
 	{
 		_flyweight = BuildingBlock.GetFlyweight(BlockCategory.BuildingBlock);
 		
@@ -27,6 +34,11 @@ public class Cube : MonoBehaviour
 	{
 		_flyweight.Move(transform, _speed);
 	}
+
+    private void OnEnable()
+    {
+        transform.localPosition = originalPos;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

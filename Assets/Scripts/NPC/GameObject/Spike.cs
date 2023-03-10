@@ -11,6 +11,13 @@ public class Spike : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
+    private Vector3 originalPos;
+
+    private void Awake()
+    {
+        originalPos = transform.localPosition;
+    }
+
     // Use this for initialization
     private void Start()
     {
@@ -26,6 +33,11 @@ public class Spike : MonoBehaviour
     private void Update()
     {
         _flyweight.Move(transform, _speed);
+    }
+
+    private void OnEnable()
+    {
+        transform.localPosition = originalPos;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

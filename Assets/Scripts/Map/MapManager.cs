@@ -34,9 +34,6 @@ public class MapManager : MonoBehaviour
     // We need to offset those different so we can place blocks at the right place
     private const float OBJECT_OFFSET = 0.5f;
 
-    // The full-time needed to cover a full width pattern, based on PLATFORM_SPEED
-    private float _mapPatternCoverTime = (float)PLAY_SCREEN_WIDTH / GameConst.PLATFORM_SPEED;
-
     // Reference to NPC Manager to access its ObjectPools
     [SerializeField]
     private NPCManager _npcManager;
@@ -83,8 +80,8 @@ public class MapManager : MonoBehaviour
             _placeableCodeMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
-        SetCurrentMapPattern(_mapPatterns.Find(pattern => pattern.Id == 1));
-        _nextMapPattern = _mapPatterns.Find(pattern => pattern.Id == 1);
+        SetCurrentMapPattern(_mapPatterns.Find(pattern => pattern.Id == 2));
+        _nextMapPattern = _mapPatterns.Find(pattern => pattern.Id == 2);
 
     }
 
@@ -98,13 +95,6 @@ public class MapManager : MonoBehaviour
         }
 
         _mapCoverTime -= Time.deltaTime;
-        _mapPatternCoverTime -= Time.deltaTime;
-
-        if(_mapPatternCoverTime <= 0)
-        {
-
-        }
-
         if (_mapCoverTime > 0)
         {
             return;
@@ -170,6 +160,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        // Start cleaning up out of screen objects after the map pattern is finished
         StartCoroutine(ReleaseAfterSeconds((PLAY_SCREEN_WIDTH + mapPattern.MapLen) / GameConst.PLATFORM_SPEED, cleanupActions));
     }
 
@@ -182,7 +173,7 @@ public class MapManager : MonoBehaviour
 
     private IEnumerator ReleaseAfterSeconds(float seconds, List<Action> actions)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSecondsRealtime(seconds);
 
         foreach(Action action in actions)
         {

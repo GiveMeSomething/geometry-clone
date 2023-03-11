@@ -9,7 +9,9 @@ public class CustomObjectPool
     private GameObject _targetPrefab;
 
     private bool collectionCheck = true;
-    private int maxPoolSize = 30;
+
+    // Maximum object that can be render in one game screen
+    private int maxPoolSize = 160;
 
     public IObjectPool<GameObject> Pool
     {

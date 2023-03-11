@@ -110,8 +110,10 @@ public class MapManager : MonoBehaviour
         renderable = true;
     }
 
-    private void ValidateMap(int[] data, int length)
+    private void ValidateMap(MapPattern mapPattern)
     {
+        var data = mapPattern.Data;
+        var length = mapPattern.MapLen;
         if (data.Length % length != 0)
         {
             throw new Exception($"Map data is not compatible with length: {length}");

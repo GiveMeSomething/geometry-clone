@@ -10,8 +10,11 @@ public class CustomObjectPool
 
     private bool collectionCheck = true;
 
-    // Maximum object that can be render in one game screen
-    private int maxPoolSize = 160;
+    // Maximum object that can be render at one point of time
+    // 160 for out-of-screen objects
+    // 160 for in-screen objects
+    // 160 for objects that are about to be rendered
+    private int maxPoolSize = 480;
 
     public IObjectPool<GameObject> Pool
     {

@@ -1,8 +1,38 @@
 ﻿using System;
+using UnityEngine;
 
-public class BuildingBlock
+public class BuildingBlock: MonoBehaviour
 {
-    public static IBlockFlyweight GetFlyweight(BlockCategory type)
+    [SerializeField]
+    protected float _speed = GameConst.PLATFORM_SPEED;
+
+    protected Rigidbody2D _rigidbody;
+
+    protected IBlockFlyweight _flyweight;
+
+    protected Vector3 _originalPosition;
+
+    protected virtual void Awake()
+    {
+        _originalPosition = transform.localPosition;
+    }
+
+    protected virtual void OnEnable()
+    {
+        transform.localPosition = _originalPosition;
+    }
+
+    protected virtual void Update()
+    {
+        _flyweight.Move(transform, _speed);
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        _flyweight.HandleCollision(collision);
+    }
+
+    protected IBlockFlyweight GetFlyweight(BlockCategory type)
     {
         BlockFlyweightFactory flyweightFactory = BlockFlyweightFactory.GetInstance();
         var flyweight = flyweightFactory.GetFlyweight(type);

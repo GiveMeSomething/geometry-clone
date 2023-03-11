@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerSlab
+  - GameController
+  - Obstacle
   layers:
   - Default
   - TransparentFX

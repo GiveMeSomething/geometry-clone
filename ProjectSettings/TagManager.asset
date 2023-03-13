@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameController
   - Obstacle
+  - Powerup
   layers:
   - Default
   - TransparentFX

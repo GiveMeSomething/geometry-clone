@@ -23,9 +23,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _state.HandleUserSingleTouch();
     }
-    public void Move()
+    public void StateByFrame()
     {
-        _state.Move();
+        _state.StateByFrame();
     }
 
     public void GoThroughPortal()
@@ -46,7 +46,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             HandleUserSingleTouch();
         }
-        Move();
+        StateByFrame();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

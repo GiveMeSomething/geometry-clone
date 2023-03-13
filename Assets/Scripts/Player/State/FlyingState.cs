@@ -17,7 +17,7 @@ public class FlyingState : PlayerState
         IsTouching = true;
         _gameObject.transform.Translate(new Vector3(0, _playerBehaviour.speed * Time.deltaTime, 0));
     }
-    public override void Move()
+    public override void StateByFrame()
     {
         if (!IsTouching)
         {

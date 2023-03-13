@@ -24,9 +24,9 @@ public class NormalState : PlayerState
             IsGrounded = false;
         }
     }
-    public override void Move()
+    public override void StateByFrame()
     {
-        if(IsGrounded)
+        if (IsGrounded)
         {
             Debug.Log("Grounded");
 
@@ -53,7 +53,9 @@ public class NormalState : PlayerState
         {
             _playerBehaviour.Destroy();
         }
-        if (collision.transform.name.Equals("Ground"))
+        if (!IsGrounded && (collision.transform.name.Equals("Ground")
+            || collision.transform.name.Equals("Block")
+            || collision.transform.name.Equals("Slab")))
         {
             IsGrounded = true;
         }

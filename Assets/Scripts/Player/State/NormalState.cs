@@ -26,7 +26,7 @@ public class NormalState : PlayerState
     }
     public override void StateByFrame()
     {
-        if (IsGrounded)
+        if(IsGrounded)
         {
             Debug.Log("Grounded");
 

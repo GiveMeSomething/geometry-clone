@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using UnityEngine;
+using System.Threading.Tasks;
 
 [Serializable]
 class Placeable
@@ -34,6 +35,9 @@ public class MapManager : MonoBehaviour
     // We need to offset those different so we can place blocks at the right place
     private const float OBJECT_OFFSET = 0.5f;
 
+    // Chunk size to divide the map pattern into
+    private const int CHUNK_SIZE = 5;
+
     // Reference to NPC Manager to access its ObjectPools
     [SerializeField]
     private NPCManager _npcManager;
@@ -53,9 +57,8 @@ public class MapManager : MonoBehaviour
     private Queue<MapPattern> _nextMapQueue;
 
     // Cache chunks for loaded map patterns
-    private Dictionary<int, Queue<MapPattern>> _mapPatternMap;
+    private Dictionary<int, Queue<MapPattern>> _chunkMap;
 
-    private MapPattern _nextMapPattern;
     private bool renderable = true;
     private float _mapCoverTime;
 
@@ -68,42 +71,39 @@ public class MapManager : MonoBehaviour
         loadMapCohesionCommand.Execute();
     }
 
-    private void SetMapPatterns(MapPatternFile mapPatterns)
-    {
-        _mapPatterns = new(mapPatterns.MapPatterns);
-    }
-
-    private void SetMapCohesions(MapCohesionFile mapCohesions)
-    {
-        _mapCohesions = new(mapCohesions.MapCohesions);
-    }
-
     private void Start()
     {
+        // Initialize things
+        _currentMapQueue = new();
+        _nextMapQueue = new();
+        _chunkMap = new();
+
         // Map game blocks into a dictionary
         foreach (Placeable placeable in _placeables)
         {
             _placeableCodeMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
-        SetCurrentMapPattern(_mapPatterns.Find(pattern => pattern.Id == 2));
-        _nextMapPattern = _mapPatterns.Find(pattern => pattern.Id == 2);
-
-        // TODO: Set first map as null map
+        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 2);
+        _currentMapQueue = ChunkMapPattern(_currentMapPattern);
     }
 
     private void FixedUpdate()
     {
-        // Take MapPattern from _currentMapQueue and start rendering one by one
-
-        // If the queue is empty, load the _nextMapQueue into _currentMapQueue
-        // Then load next map pattern into _nextMapQueue asynchronously
-
         // Time it take to current map pattern to finish on screen
         if (renderable)
         {
-            GenerateMap(_currentMapPattern);
+            var pattern = _currentMapQueue.Dequeue();
+            _mapCoverTime = pattern.MapLen / GameConst.PLATFORM_SPEED;
+
+            GenerateMap(pattern);
             renderable = false;
+        }
+
+        if(_currentMapQueue.Count <= 0)
+        {
+            _currentMapPattern = LoadNextMap();
+            _currentMapQueue = ChunkMapPattern(_currentMapPattern);
         }
 
         _mapCoverTime -= Time.deltaTime;
@@ -111,13 +111,6 @@ public class MapManager : MonoBehaviour
         {
             return;
         }
-
-        // TODO: Remove after test
-        // ==================================
-        var temp = _currentMapPattern;
-        SetCurrentMapPattern(_nextMapPattern);
-        _nextMapPattern = temp;
-        // ==================================
 
         renderable = true;
     }
@@ -178,21 +171,100 @@ public class MapManager : MonoBehaviour
         StartCoroutine(ReleaseAfterSeconds((PLAY_SCREEN_WIDTH + mapPattern.MapLen) / GameConst.PLATFORM_SPEED, cleanupActions));
     }
 
-    private void SetCurrentMapPattern(MapPattern mapPattern)
+    private MapPattern LoadNextMap()
     {
-        // Calculate new map pattern info
-        _mapCoverTime = mapPattern.MapLen / GameConst.PLATFORM_SPEED;
-        _currentMapPattern = mapPattern;
+        // Calculate map pattern from current map pattern
+        int nextMapId = 0;
+        var currentMapCohesion = _mapCohesions.Find(mc => mc.Id == _currentMapPattern.Id);
+
+        // Random the next map patterns from the suitable map pool
+        // If current cohesion is not set, default the next pattern to Id 0 (null pattern)
+        if (currentMapCohesion != null)
+        {
+            nextMapId = currentMapCohesion.SuitableMaps.Length == 1 ?
+                currentMapCohesion.SuitableMaps[0] :
+                currentMapCohesion.SuitableMaps[
+                    UnityEngine.Random.Range(0, currentMapCohesion.SuitableMaps.Length)
+                ];
+        }
+
+        return _mapPatterns.Find(mp => mp.Id == nextMapId);
+    }
+
+    private Queue<MapPattern> ChunkMapPattern(MapPattern mapPattern)
+    {
+        // Check chunk cache in case the map is loaded before
+        if (_chunkMap.TryGetValue(mapPattern.Id, out var mapPatterns))
+        {
+            return new(mapPatterns);
+        }
+
+        // Special check for null map pattern
+        if (mapPattern.Data.Length == 0)
+        {
+            var result = new Queue<MapPattern>();
+            result.Enqueue(mapPattern);
+            return result;
+        }
+
+        // Chunk function
+        mapPatterns = new();
+        int numberOfRow = mapPattern.Data.Length / mapPattern.MapLen;
+        int numberOfChunk = mapPattern.MapLen % CHUNK_SIZE == 0 ?
+            mapPattern.MapLen / CHUNK_SIZE :
+            mapPattern.MapLen / CHUNK_SIZE + 1;
+
+        var remainingSize = mapPattern.MapLen;
+        for (int i = 0; i < numberOfChunk; i++)
+        {
+            var currentChunkSize = remainingSize >= 10 ? CHUNK_SIZE : remainingSize;
+            remainingSize -= currentChunkSize;
+
+            // Calculate chunk start index based on chunk index
+            var chunkStartIndex = i * currentChunkSize;
+
+            var data = new List<int>();
+            for (int a = 0; a < numberOfRow; a++)
+            {
+                for (int b = chunkStartIndex; b < chunkStartIndex + currentChunkSize; b++)
+                {
+                    data.Add(mapPattern.Data[a * mapPattern.MapLen + b]);
+                }
+            }
+
+            // Add to queue after calculation
+            mapPatterns.Enqueue(new MapPattern
+            {
+                Id = -1,
+                MapLen = currentChunkSize,
+                Data = data.ToArray()
+            });
+        }
+
+        // Cache chunk data
+        _chunkMap.Add(mapPattern.Id, new(mapPatterns));
+
+        return mapPatterns;
     }
 
     private IEnumerator ReleaseAfterSeconds(float seconds, List<Action> actions)
     {
         yield return new WaitForSecondsRealtime(seconds);
 
-        foreach(Action action in actions)
+        foreach (Action action in actions)
         {
             action.Invoke();
         }
+    }
+
+    private void SetMapPatterns(MapPatternFile mapPatterns)
+    {
+        _mapPatterns = new(mapPatterns.MapPatterns);
+    }
+
+    private void SetMapCohesions(MapCohesionFile mapCohesions)
+    {
+        _mapCohesions = new(mapCohesions.MapCohesions);
     }
 }
 

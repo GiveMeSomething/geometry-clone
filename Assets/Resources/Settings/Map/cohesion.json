@@ -1,8 +1,16 @@
 ﻿{
-  "MapCohesions": [
-    {
-      "Id": 0,
-      "SuitableMaps": [0, 1]
-    }
-  ]
+    "MapCohesions": [
+        {
+            "Id": 0,
+            "SuitableMaps": [ 0, 1 ]
+        },
+        {
+            "Id": 1,
+            "SuitableMaps": [ 1 ]
+        },
+        {
+            "Id": 2,
+            "SuitableMaps": [ 2 ]
+        }
+    ]
 }

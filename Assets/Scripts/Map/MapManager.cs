@@ -49,6 +49,12 @@ public class MapManager : MonoBehaviour
 
     // Data for map streaming
     private MapPattern _currentMapPattern;
+    private Queue<MapPattern> _currentMapQueue;
+    private Queue<MapPattern> _nextMapQueue;
+
+    // Cache chunks for loaded map patterns
+    private Dictionary<int, Queue<MapPattern>> _mapPatternMap;
+
     private MapPattern _nextMapPattern;
     private bool renderable = true;
     private float _mapCoverTime;
@@ -83,10 +89,16 @@ public class MapManager : MonoBehaviour
         SetCurrentMapPattern(_mapPatterns.Find(pattern => pattern.Id == 2));
         _nextMapPattern = _mapPatterns.Find(pattern => pattern.Id == 2);
 
+        // TODO: Set first map as null map
     }
 
     private void FixedUpdate()
     {
+        // Take MapPattern from _currentMapQueue and start rendering one by one
+
+        // If the queue is empty, load the _nextMapQueue into _currentMapQueue
+        // Then load next map pattern into _nextMapQueue asynchronously
+
         // Time it take to current map pattern to finish on screen
         if (renderable)
         {

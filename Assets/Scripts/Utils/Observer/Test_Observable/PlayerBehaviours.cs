@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class JumpDetector : MonoBehaviour
+public class PlayerBehaviours : MonoBehaviour
 {
     public float speed = 2.0f; // the speed at which the player moves
     // Detect when the player jumps and when the player dies, and send out events using the Observable<T> class
     public Observable<bool> onJump = new Observable<bool>();
     public Observable<bool> onGameOver = new Observable<bool>();
+    //Scrore
+    public float totalDistanceTraveled = 0f;
 
     private Rigidbody2D rb;
     // Use this for initialization
@@ -26,6 +28,10 @@ public class JumpDetector : MonoBehaviour
             rb.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
             onJump.Notify(true);
         }
+
+        //Calculate the total distance traveled
+        float distanceTraveledThisFrame = speed * Time.deltaTime;
+        totalDistanceTraveled += distanceTraveledThisFrame;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

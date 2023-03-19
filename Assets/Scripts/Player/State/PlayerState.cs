@@ -9,12 +9,13 @@ public abstract class PlayerState
 
     public void SetContext(PlayerBehaviour behaviour)
     {
-        this._playerBehaviour = behaviour;
-        this._gameObject = behaviour.gameObject;
-        this.SetUpEnviroment();
+        _playerBehaviour = behaviour;
+        _gameObject = behaviour.gameObject;
+        SetUpEnviroment();
     }
     public abstract void SetUpEnviroment();
     public abstract void HandleUserSingleTouch();
-    public abstract void Move();
+    public abstract void StateByFrame();
     public abstract void GoThroughPortal();
+    public abstract void OnCollisionEnter(Collision2D collision);
 }

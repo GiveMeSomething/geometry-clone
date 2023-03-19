@@ -6,30 +6,37 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField]
     public float speed;
+
+    [SerializeField]
+    public float jumpSpeed;
+
+    public Rigidbody2D rb;
+    public Transform Sprite;
+
     private PlayerState _state;
     public void TransitionTo(PlayerState state)
     {
-        this._state = state;
-        this._state.SetContext(this);
+        _state = state;
+        _state.SetContext(this);
     }
     public void HandleUserSingleTouch()
     {
-        this._state.HandleUserSingleTouch();
+        _state.HandleUserSingleTouch();
     }
-    public void Move()
+    public void StateByFrame()
     {
-        this._state.Move();
+        _state.StateByFrame();
     }
 
     public void GoThroughPortal()
     {
-        this._state.GoThroughPortal();
+        _state.GoThroughPortal();
     }
     // Start is called before the first frame update
     void Start()
     {
-        this.TransitionTo(new NormalState());
-
+        TransitionTo(new NormalState());
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -37,16 +44,24 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            this.HandleUserSingleTouch();
+            HandleUserSingleTouch();
         }
-        this.Move();
+        StateByFrame();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.transform.name.Equals("Portal"))
         {
-            this.GoThroughPortal();
+            GoThroughPortal();
         }
+        else
+        {
+            _state.OnCollisionEnter(collision);
+        }
+    }
+    public void Destroy()
+    {
+        Debug.Log("End Game");
     }
 }

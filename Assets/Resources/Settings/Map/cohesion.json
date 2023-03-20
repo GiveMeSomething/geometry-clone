@@ -27,6 +27,18 @@
         {
             "Id": 6,
             "SuitableMaps": [ 0, 5, 6 ]
+        },
+        {
+            "Id": 7,
+            "SuitableMaps": [ 0, 8, 9 ]
+        },
+        {
+            "Id": 8,
+            "SuitableMaps": [ 0, 7, 9 ]
+        },
+        {
+            "Id": 9,
+            "SuitableMaps": [ 0, 7, 8 ]
         }
     ]
 }

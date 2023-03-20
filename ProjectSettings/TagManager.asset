@@ -8,6 +8,8 @@ TagManager:
   - Obstacle
   - PlayerSlab
   - Powerup
+  - Platform
+  - BuildingBlock
   layers:
   - Default
   - TransparentFX

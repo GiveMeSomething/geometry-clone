@@ -9,11 +9,14 @@ public class NormalState : PlayerState
 
     public override void SetUpEnviroment()
     {
-        //TODO: Set up the enviroment
-        Debug.Log("Normal Enviroment");
-        _gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-        GameObject.FindGameObjectWithTag("PlayerSlab").transform.localScale = new Vector3(0, 0, 0);
+        // Enable UnityEngine gravity in normal mode
+        _playerBehaviour.rb.gravityScale = 1;
+
+        // Hide rocket when in normal mode
+        var rocket = _playerBehaviour.transform.GetChild(1);
+        rocket.gameObject.SetActive(false);
     }
+
     public override void HandleUserSingleTouch()
     {
         //TODO: Make character jump
@@ -26,17 +29,17 @@ public class NormalState : PlayerState
     }
     public override void StateByFrame()
     {
-        if(IsGrounded)
+        if (IsGrounded)
         {
-
             Vector3 Rotation = _playerBehaviour.Sprite.rotation.eulerAngles;
             Rotation.z = Mathf.Round(Rotation.z / 90) * 90;
 
             _playerBehaviour.Sprite.rotation = Quaternion.Euler(Rotation);
         }
+
         if (!IsGrounded)
         {
-            _playerBehaviour.Sprite.Rotate(Vector3.back * 0.8f);
+            _playerBehaviour.Sprite.Rotate(Vector3.back * _playerBehaviour.rotateSpeed);
         }
     }
     public override void GoThroughPortal()
@@ -46,15 +49,31 @@ public class NormalState : PlayerState
 
     public override void OnCollisionEnter(Collision2D collision)
     {
-        if (collision.transform.name.Equals("Spike"))
+        base.OnCollisionEnter(collision);
+
+        if (collision.transform.CompareTag(GameTag.BuildingBlock))
         {
-            _playerBehaviour.Destroy();
+            Vector2 contactPoint = collision.contacts[0].point;
+            Debug.Log(contactPoint);
+
+            Vector2 blockCenter = collision.gameObject.transform.position;
+
+            if (contactPoint.x < blockCenter.x || contactPoint.y < blockCenter.y)
+            {
+                // Object touched left or bottom side of the other object
+                _playerBehaviour.Destroy();
+                return;
+            }
         }
-        if (!IsGrounded && (collision.transform.name.Equals("Ground")
-            || collision.transform.name.Equals("Block")
-            || collision.transform.name.Equals("Slab")))
+
+        if (!IsGrounded)
         {
-            IsGrounded = true;
+            if(collision.transform.CompareTag(GameTag.Platform) ||
+                collision.transform.CompareTag(GameTag.Obstacle) ||
+                collision.transform.CompareTag(GameTag.BuildingBlock))
+            {
+                IsGrounded = true;
+            }
         }
     }
 }

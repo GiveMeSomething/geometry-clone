@@ -36,7 +36,7 @@ public class PlayerBehaviours : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == GameTag.Obstacle)
         {
             //stop the player from moving
             rb.velocity = Vector2.zero;

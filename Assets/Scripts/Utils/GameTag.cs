@@ -12,11 +12,6 @@ public class GameTag
 
     public static string Portal = "Portal";
 
-    public static string PlayerSlab = "PlayerSlab";
-
-    public static string Spike = "Spike";
-
-    public static string Ground = "Ground";
-
+    public static string Powerup = "Powerup";
 }
 

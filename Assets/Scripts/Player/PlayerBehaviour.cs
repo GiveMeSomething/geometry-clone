@@ -57,7 +57,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.transform.name.Equals("Portal"))
+        if (collision.collider.transform.name.Equals(GameTag.Portal))
         {
             GoThroughPortal();
         }

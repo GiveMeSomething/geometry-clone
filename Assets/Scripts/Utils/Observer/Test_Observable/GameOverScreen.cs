@@ -1,13 +1,35 @@
 ﻿using UnityEngine;
 using TMPro;
 using System;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class GameOverScreen : MonoBehaviour
 {
-    public void ShowGameOverScreen()
+    [SerializeField]
+    private TMP_Text scoreText;
+    [SerializeField]
+    private Button replayButton;
+
+    public Observable<bool> onReplayButtonClicked = new Observable<bool>();
+
+    private void Start()
     {
+        replayButton.onClick.AddListener(() =>
+        {
+            onReplayButtonClicked.Notify(true);
+        });
+    }
+
+    public void ShowGameOverScreen(float score)
+    {
+        scoreText.text = "Score: " + score.ToString();
         gameObject.SetActive(true);
+    }
+
+    internal void HideGameOverScreen()
+    {
+        gameObject.SetActive(false);
     }
 }
 

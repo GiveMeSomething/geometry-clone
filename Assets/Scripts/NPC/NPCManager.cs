@@ -13,6 +13,9 @@ public class NPCManager : MonoBehaviour
 	[SerializeField]
 	private GameObject _spikePrefab;
 
+	[SerializeField]
+	private GameObject _portalPrefab;
+
 	private Dictionary<BlockType, CustomObjectPool> _npcPoolMap;
 
     private void Start()
@@ -39,7 +42,10 @@ public class NPCManager : MonoBehaviour
 			case BlockType.Spike:
 				objectPool = new(_spikePrefab);
 				break;
-        }
+			case BlockType.Portal:
+				objectPool = new(_portalPrefab);
+				break;
+		}
 
 		_npcPoolMap.Add(blockType, objectPool);
 		return objectPool;

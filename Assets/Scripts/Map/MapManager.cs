@@ -84,7 +84,7 @@ public class MapManager : MonoBehaviour
             _placeableCodeMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
-        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 2);
+        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 30);
         _currentMapQueue = ChunkMapPattern(_currentMapPattern);
     }
 

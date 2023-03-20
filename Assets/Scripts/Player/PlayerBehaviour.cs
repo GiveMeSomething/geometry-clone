@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    [SerializeField]
     public float speed;
 
-    [SerializeField]
     public float jumpSpeed;
+
+    public float rotateSpeed;
 
     public Rigidbody2D rb;
     public Transform Sprite;
 
     private PlayerState _state;
+
+    public Observable<bool> GameOverEvent = new Observable<bool>();
+
     public void TransitionTo(PlayerState state)
     {
         _state = state;
         _state.SetContext(this);
     }
+
     public void HandleUserSingleTouch()
     {
         _state.HandleUserSingleTouch();
     }
+
     public void StateByFrame()
     {
         _state.StateByFrame();
@@ -32,15 +37,16 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _state.GoThroughPortal();
     }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         TransitionTo(new NormalState());
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Space))
         {
@@ -60,8 +66,10 @@ public class PlayerBehaviour : MonoBehaviour
             _state.OnCollisionEnter(collision);
         }
     }
+
     public void Destroy()
     {
-        Debug.Log("End Game");
+        GameOverEvent.Notify(true);
+        Debug.Log("Game Over"); 
     }
 }

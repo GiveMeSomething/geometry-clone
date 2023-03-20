@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1450371846091104132}
   - component: {fileID: 8262622345114099829}
   - component: {fileID: 4789490667474283853}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5905436451119959359}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Slab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

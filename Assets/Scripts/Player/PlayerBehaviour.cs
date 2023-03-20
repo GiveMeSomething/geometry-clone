@@ -49,7 +49,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            HandleUserSingleTouch();
+            onUserSingleTouch.Notify(true);
+            // HandleUserSingleTouch();
         }
         StateByFrame();
     }
@@ -58,11 +59,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (collision.collider.transform.name.Equals(GameTag.Portal))
         {
-            GoThroughPortal();
+            // GoThroughPortal();
+            onNewChunk.Notify(true);
         }
         else
         {
-            _state.OnCollisionEnter(collision);
+            // _state.OnCollisionEnter(collision);
+            onGameOver.Notify(true);
         }
     }
 

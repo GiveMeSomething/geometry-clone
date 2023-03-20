@@ -28,12 +28,9 @@ public class NormalState : PlayerState
     {
         if(IsGrounded)
         {
-            Debug.Log("Grounded");
 
             Vector3 Rotation = _playerBehaviour.Sprite.rotation.eulerAngles;
-            Debug.Log(Rotation);
             Rotation.z = Mathf.Round(Rotation.z / 90) * 90;
-            Debug.Log(Rotation);
 
             _playerBehaviour.Sprite.rotation = Quaternion.Euler(Rotation);
         }

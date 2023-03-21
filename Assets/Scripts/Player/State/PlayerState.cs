@@ -11,6 +11,7 @@ public abstract class PlayerState
         _playerBehaviour = behaviour;
         SetUpEnviroment();
     }
+
     public abstract void SetUpEnviroment();
     public abstract void HandleUserSingleTouch();
     public abstract void StateByFrame();

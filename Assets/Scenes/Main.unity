@@ -255,40 +255,20 @@ MonoBehaviour:
   _slabPrefab: {fileID: 8627949627266174454, guid: d5e52c4c23c8a4ffbbf594390aae2224, type: 3}
   _spikePrefab: {fileID: 806984675358935825, guid: f442c8d5863a74eb4854c17030aaedd9, type: 3}
   _portalPrefab: {fileID: 2127002361053527565, guid: 3c197aede2f43b84faafce735225be1a, type: 3}
---- !u!1001 &1350029314
+--- !u!1001 &930686734
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 97614306724755502, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
-      propertyPath: m_Constraints
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 97614306724755502, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
-      propertyPath: m_GravityScale
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
       propertyPath: speed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
-      propertyPath: gravity
-      value: 8.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
-      propertyPath: jumpSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
-      propertyPath: rotateSpeed
-      value: 3.6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 97614306724755506, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 97614306724755506, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -328,10 +308,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 97614306724755506, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 97614306724755507, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 97614306724755508, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
@@ -436,7 +412,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8946980121117941266, guid: f3b90b7a42d254af7a5d16292989dd37, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8946980121117941266, guid: f3b90b7a42d254af7a5d16292989dd37, type: 3}
       propertyPath: m_LocalPosition.x

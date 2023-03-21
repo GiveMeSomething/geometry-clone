@@ -42,13 +42,13 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         TransitionTo(new NormalState());
-        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
         totalSurviveTime += Time.deltaTime;
+
         if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
         {
             HandleUserSingleTouch();

@@ -10,7 +10,7 @@ public class FlyingState : PlayerState
     public override void SetUpEnviroment()
     {
         // Disable UnityEngine gravity in fly mode
-        _playerBehaviour.rb.gravityScale = 0.0f;
+        _playerBehaviour.rb.gravityScale = 0;
 
         // Set Active for rocket in fly mode
         var rocket = _playerBehaviour.transform.GetChild(1);

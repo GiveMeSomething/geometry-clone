@@ -22,13 +22,17 @@ public class NormalState : PlayerState
         //TODO: Make character jump
         if (IsGrounded)
         {
-            _playerBehaviour.rb.velocity = Vector3.zero;
             //_playerBehaviour.rb.AddForce(new Vector2(0, _playerBehaviour.jumpSpeed * Mathf.Sqrt(GameConst.SPEED_SCALE)), ForceMode2D.Impulse);
-            _playerBehaviour.rb.AddForce(new Vector2(0, _playerBehaviour.jumpSpeed * Mathf.Sqrt(_playerBehaviour.rb.gravityScale)), ForceMode2D.Impulse);
-            
+            _playerBehaviour.rb.AddForce(
+                new Vector2(
+                    0,
+                    _playerBehaviour.jumpSpeed * Mathf.Sqrt(_playerBehaviour.rb.gravityScale)),
+                    ForceMode2D.Impulse
+                );
             IsGrounded = false;
         }
     }
+
     public override void StateByFrame()
     {
         if (IsGrounded)
@@ -44,6 +48,7 @@ public class NormalState : PlayerState
             _playerBehaviour.Sprite.Rotate(Vector3.back * _playerBehaviour.rotateSpeed);
         }
     }
+
     public override void GoThroughPortal()
     {
         _playerBehaviour.TransitionTo(new FlyingState());
@@ -57,14 +62,10 @@ public class NormalState : PlayerState
     {
         base.OnCollisionEnter(collision);
 
-        if (collision.transform.CompareTag(GameTag.BuildingBlock))
-        {
-            IsGrounded = true;
-        }
-
         if (!IsGrounded)
         {
-            if (collision.transform.CompareTag(GameTag.Platform))
+            if (collision.transform.CompareTag(GameTag.Platform) ||
+                collision.transform.CompareTag(GameTag.BuildingBlock))
             {
                 IsGrounded = true;
             }

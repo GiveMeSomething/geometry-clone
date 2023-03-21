@@ -2,7 +2,7 @@
     "MapCohesions": [
         {
             "Id": 0,
-            "SuitableMaps": [ 11 ]
+            "SuitableMaps": [ 5 ]
         },
         {
             "Id": 1,
@@ -22,7 +22,7 @@
         },
         {
             "Id": 5,
-            "SuitableMaps": [ 0, 3, 4, 6 ]
+            "SuitableMaps": [ 5 ]
         },
         {
             "Id": 6,
@@ -46,7 +46,7 @@
         },
         {
             "Id": 11,
-            "SuitableMaps": [ 11 ]
+            "SuitableMaps": [ 10 ]
         }
     ]
 }

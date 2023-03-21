@@ -84,7 +84,7 @@ public class MapManager : MonoBehaviour
             _placeableCodeMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
-        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 11);
+        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 0);
         _currentMapQueue = ChunkMapPattern(_currentMapPattern);
     }
 
@@ -95,7 +95,7 @@ public class MapManager : MonoBehaviour
         {
             renderable = false;
             var pattern = _currentMapQueue.Dequeue();
-            _mapCoverTime = pattern.MapLen / GameConst.PLATFORM_SPEED;
+            _mapCoverTime = pattern.MapLen / (GameConst.PLATFORM_SPEED * GameConst.SPEED_SCALE);
 
             GenerateMap(pattern);
         }
@@ -176,7 +176,7 @@ public class MapManager : MonoBehaviour
         StartCoroutine(
             ReleaseAfterSeconds(
                 (PLAY_SCREEN_WIDTH + mapPattern.MapLen) /
-                GameConst.PLATFORM_SPEED, cleanupActions
+                GameConst.PLATFORM_SPEED * GameConst.SPEED_SCALE, cleanupActions
             )
         );
     }

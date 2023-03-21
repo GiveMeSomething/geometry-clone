@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    [SerializeField]
     public float speed;
 
+    [SerializeField]
     public float jumpSpeed;
 
+    [SerializeField]
     public float rotateSpeed;
 
     public Rigidbody2D rb;

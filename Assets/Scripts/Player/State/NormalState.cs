@@ -53,8 +53,6 @@ public class NormalState : PlayerState
     {
         base.OnCollisionEnter(collision);
 
-        
-
         if (collision.transform.CompareTag(GameTag.BuildingBlock))
         {
             IsGrounded = true;

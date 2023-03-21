@@ -22,6 +22,7 @@ public abstract class PlayerState
         {
             _playerBehaviour.Destroy();
         }
+        
         if (collision.transform.CompareTag(GameTag.BuildingBlock))
         {
             var shouldDestroy = false;
@@ -44,10 +45,7 @@ public abstract class PlayerState
 
             if (shouldDestroy)
             {
-                // TODO: Remove log later
-                Debug.Log("Game OVer");
                 _playerBehaviour.Destroy();
-                return;
             }
         }
     }

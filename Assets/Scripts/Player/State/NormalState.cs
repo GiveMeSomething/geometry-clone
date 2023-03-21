@@ -10,7 +10,7 @@ public class NormalState : PlayerState
     public override void SetUpEnviroment()
     {
         // Enable UnityEngine gravity in normal mode
-        _playerBehaviour.rb.gravityScale = 1 * GameConst.SPEED_SCALE;
+        _playerBehaviour.rb.gravityScale = _playerBehaviour.gravity * GameConst.SPEED_SCALE;
 
         // Hide rocket when in normal mode
         var rocket = _playerBehaviour.transform.GetChild(1);

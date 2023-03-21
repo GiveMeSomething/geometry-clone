@@ -84,7 +84,7 @@ public class MapManager : MonoBehaviour
             _placeableCodeMap.Add(placeable.BlockCode, placeable.BlockType);
         }
 
-        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 0);
+        _currentMapPattern = _mapPatterns.Find(pattern => pattern.Id == 11);
         _currentMapQueue = ChunkMapPattern(_currentMapPattern);
     }
 
@@ -100,7 +100,7 @@ public class MapManager : MonoBehaviour
             GenerateMap(pattern);
         }
 
-        if(_currentMapQueue.Count <= 0)
+        if (_currentMapQueue.Count <= 0)
         {
             _currentMapPattern = LoadNextMap();
             _currentMapQueue = ChunkMapPattern(_currentMapPattern);
@@ -136,7 +136,7 @@ public class MapManager : MonoBehaviour
         var data = mapPattern.Data;
         var length = mapPattern.MapLen;
 
-        if(data.Length == 0)
+        if (data.Length == 0)
         {
             return;
         }
@@ -173,7 +173,12 @@ public class MapManager : MonoBehaviour
         }
 
         // Start cleaning up out of screen objects after the map pattern is finished
-        StartCoroutine(ReleaseAfterSeconds((PLAY_SCREEN_WIDTH + mapPattern.MapLen) / GameConst.PLATFORM_SPEED, cleanupActions));
+        StartCoroutine(
+            ReleaseAfterSeconds(
+                (PLAY_SCREEN_WIDTH + mapPattern.MapLen) /
+                GameConst.PLATFORM_SPEED, cleanupActions
+            )
+        );
     }
 
     private MapPattern LoadNextMap()
@@ -222,7 +227,7 @@ public class MapManager : MonoBehaviour
         var remainingSize = mapPattern.MapLen;
         for (int i = 0; i < numberOfChunk; i++)
         {
-            var currentChunkSize = remainingSize >= 10 ? CHUNK_SIZE : remainingSize;
+            var currentChunkSize = remainingSize >= CHUNK_SIZE ? CHUNK_SIZE : remainingSize;
             remainingSize -= currentChunkSize;
 
             // Calculate chunk start index based on chunk index

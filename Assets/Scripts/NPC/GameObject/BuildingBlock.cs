@@ -14,6 +14,7 @@ public class BuildingBlock: MonoBehaviour
     protected virtual void Awake()
     {
         _originalPosition = transform.localPosition;
+        _speed = GameConst.PLATFORM_SPEED;
     }
 
     protected virtual void OnEnable()

@@ -46,7 +46,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Space))
         {
@@ -70,6 +70,5 @@ public class PlayerBehaviour : MonoBehaviour
     public void Destroy()
     {
         GameOverEvent.Notify(true);
-        Debug.Log("Game Over"); 
     }
 }

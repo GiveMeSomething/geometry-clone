@@ -47,6 +47,10 @@ public class NormalState : PlayerState
     public override void GoThroughPortal()
     {
         _playerBehaviour.TransitionTo(new FlyingState());
+        Vector3 Rotation = _playerBehaviour.Sprite.rotation.eulerAngles;
+        Rotation.z = Mathf.Round(Rotation.z / 90) * 90;
+
+        _playerBehaviour.Sprite.rotation = Quaternion.Euler(Rotation);
     }
 
     public override void OnCollisionEnter(Collision2D collision)

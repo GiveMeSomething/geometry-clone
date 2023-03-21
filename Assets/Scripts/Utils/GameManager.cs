@@ -5,7 +5,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public GameOverScreen gameOverScreen;
-    public PlayerBehaviours playerBehaviours;
+    public PlayerBehaviour playerBehaviours;
     private GameState currentState;
 
     private float gameStartTime;
@@ -17,10 +17,10 @@ public class GameManager : MonoBehaviour
     {
         currentState = new PlayingState(this);
         currentState.EnterState();
-        playerBehaviours = FindObjectOfType<PlayerBehaviours>();
+        playerBehaviours = FindObjectOfType<PlayerBehaviour>();
         if (playerBehaviours != null)
         {
-            playerBehaviours.onGameOver.Subscribe(OnObstacleHit);
+            playerBehaviours.GameOverEvent.Subscribe(OnObstacleHit);
         }
         if (gameOverScreen != null)
         {
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         if (repeat)
         {
+            Debug.Log("onReplayButtonClicked called with value " + repeat);
             //reset game
             Time.timeScale = 1;
             //change state

@@ -15,6 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerState _state;
 
     public Observable<bool> GameOverEvent = new Observable<bool>();
+    public float totalDistanceTraveled = 0f;
 
     public void TransitionTo(PlayerState state)
     {
@@ -47,10 +48,18 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
+        float distanceTraveledThisFrame = speed * Time.deltaTime;
+        totalDistanceTraveled += distanceTraveledThisFrame;
+        if (Input.touchCount > 0)
         {
-            onUserSingleTouch.Notify(true);
-            // HandleUserSingleTouch();
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    HandleUserSingleTouch();
+                }
+            }
         }
         StateByFrame();
     }
@@ -59,13 +68,12 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (collision.collider.transform.name.Equals(GameTag.Portal))
         {
-            // GoThroughPortal();
-            onNewChunk.Notify(true);
+            GoThroughPortal();
         }
         else
         {
             // _state.OnCollisionEnter(collision);
-            onGameOver.Notify(true);
+            GameOverEvent.Notify(true);
         }
     }
 

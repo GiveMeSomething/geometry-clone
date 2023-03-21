@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class BuildingBlock: MonoBehaviour
 {
-    [SerializeField]
     protected float _speed = GameConst.PLATFORM_SPEED;
 
     protected Rigidbody2D _rigidbody;

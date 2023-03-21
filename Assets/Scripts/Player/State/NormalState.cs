@@ -10,7 +10,7 @@ public class NormalState : PlayerState
     public override void SetUpEnviroment()
     {
         // Enable UnityEngine gravity in normal mode
-        _playerBehaviour.rb.gravityScale = 1;
+        _playerBehaviour.rb.gravityScale = 1 * GameConst.SPEED_SCALE;
 
         // Hide rocket when in normal mode
         var rocket = _playerBehaviour.transform.GetChild(1);
@@ -23,7 +23,8 @@ public class NormalState : PlayerState
         if (IsGrounded)
         {
             _playerBehaviour.rb.velocity = Vector3.zero;
-            _playerBehaviour.rb.AddForce(Vector2.up * _playerBehaviour.jumpSpeed);
+            //_playerBehaviour.rb.AddForce(Vector2.up * _playerBehaviour.jumpSpeed);
+            _playerBehaviour.rb.AddForce(Physics.gravity, ForceMode2D.Impulse);
             IsGrounded = false;
         }
     }

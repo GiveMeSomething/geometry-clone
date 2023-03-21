@@ -10,6 +10,8 @@ public class Portal : BuildingBlock
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Portal");
+        if(collision.gameObject.tag.Equals(GameTag.Player)){
+            collision.gameObject.GetComponent<PlayerBehaviour>().GoThroughPortal();
+        }
     }
 }

@@ -254,7 +254,7 @@ MonoBehaviour:
   _cubePrefab: {fileID: 6176362695079094300, guid: 03701d0f6b12e422da17ea7cdd42e443, type: 3}
   _slabPrefab: {fileID: 8627949627266174454, guid: d5e52c4c23c8a4ffbbf594390aae2224, type: 3}
   _spikePrefab: {fileID: 806984675358935825, guid: f442c8d5863a74eb4854c17030aaedd9, type: 3}
-  _portalPrefab: {fileID: 0}
+  _portalPrefab: {fileID: 2127002361053527565, guid: 3c197aede2f43b84faafce735225be1a, type: 3}
 --- !u!1001 &1350029314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,6 +364,8 @@ MonoBehaviour:
     BlockType: 2
   - BlockCode: 3
     BlockType: 3
+  - BlockCode: 4
+    BlockType: 4
 --- !u!1 &1948092953
 GameObject:
   m_ObjectHideFlags: 0

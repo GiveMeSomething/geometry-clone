@@ -56,15 +56,12 @@ public class MapManager : MonoBehaviour
     // Data for map streaming
     private Queue<MapPattern> _mapPatternQueue = new();
     private MapPattern _currentMapPattern;
-<<<<<<< Updated upstream
     private Queue<MapPattern> _currentMapQueue;
     private Queue<MapPattern> _nextMapQueue;
 
     // Cache chunks for loaded map patterns
     private Dictionary<int, Queue<MapPattern>> _chunkMap;
 
-=======
->>>>>>> Stashed changes
     private bool renderable = true;
     private float _mapCoverTime;
 

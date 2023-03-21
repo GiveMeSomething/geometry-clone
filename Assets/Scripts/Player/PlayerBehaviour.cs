@@ -15,6 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerState _state;
 
     public Observable<bool> GameOverEvent = new Observable<bool>();
+    public float totalSurviveTime = 0f;
 
     public void TransitionTo(PlayerState state)
     {
@@ -47,16 +48,18 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
+        totalSurviveTime += Time.deltaTime;
+        if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
         {
             HandleUserSingleTouch();
         }
+
         StateByFrame();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.transform.name.Equals(GameTag.Portal))
+        if (collision.transform.CompareTag(GameTag.Portal))
         {
             GoThroughPortal();
         }

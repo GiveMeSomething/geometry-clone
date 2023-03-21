@@ -53,24 +53,41 @@ public class NormalState : PlayerState
 
         if (collision.transform.CompareTag(GameTag.BuildingBlock))
         {
-            Vector2 contactPoint = collision.contacts[0].point;
-            Debug.Log(contactPoint);
-
-            Vector2 blockCenter = collision.gameObject.transform.position;
-
-            if (contactPoint.x < blockCenter.x || contactPoint.y < blockCenter.y)
+            var shouldDestroy = false;
+            foreach(var contactPoint in collision.contacts)
             {
-                // Object touched left or bottom side of the other object
+                var normalized = contactPoint.point.normalized;
+
+                // Skip when the contact is above the cube
+                if(Vector3.Dot(normalized, Vector3.up) < 0.5f)
+                {
+                    continue;
+                }
+
+                if(normalized.x < 0f || normalized.y < 0f)
+                {
+                    shouldDestroy = true;
+                    break;
+                }
+            }
+
+            if(shouldDestroy)
+            {
+                // TODO: Remove log later
+                Debug.Log("Game OVer");
                 _playerBehaviour.Destroy();
                 return;
             }
         }
 
+        if(collision.transform.CompareTag(GameTag.BuildingBlock))
+        {
+            IsGrounded = true;
+        }
+
         if (!IsGrounded)
         {
-            if(collision.transform.CompareTag(GameTag.Platform) ||
-                collision.transform.CompareTag(GameTag.Obstacle) ||
-                collision.transform.CompareTag(GameTag.BuildingBlock))
+            if(collision.transform.CompareTag(GameTag.Platform))
             {
                 IsGrounded = true;
             }

@@ -254,7 +254,7 @@ MonoBehaviour:
   _cubePrefab: {fileID: 6176362695079094300, guid: 03701d0f6b12e422da17ea7cdd42e443, type: 3}
   _slabPrefab: {fileID: 8627949627266174454, guid: d5e52c4c23c8a4ffbbf594390aae2224, type: 3}
   _spikePrefab: {fileID: 806984675358935825, guid: f442c8d5863a74eb4854c17030aaedd9, type: 3}
-  _portalPrefab: {fileID: 0}
+  _portalPrefab: {fileID: 2127002361053527565, guid: 3c197aede2f43b84faafce735225be1a, type: 3}
 --- !u!1001 &1350029314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,6 +262,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 97614306724755502, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 97614306724755502, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: m_GravityScale
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: gravity
+      value: 8.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: jumpSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 97614306724755505, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: rotateSpeed
+      value: 3.6
+      objectReference: {fileID: 0}
     - target: {fileID: 97614306724755506, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -304,6 +328,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 97614306724755506, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97614306724755507, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 97614306724755508, guid: e0ebab7d95620af40a0fb00dd2a28f0f, type: 3}
@@ -364,6 +392,8 @@ MonoBehaviour:
     BlockType: 2
   - BlockCode: 3
     BlockType: 3
+  - BlockCode: 4
+    BlockType: 4
 --- !u!1 &1948092953
 GameObject:
   m_ObjectHideFlags: 0

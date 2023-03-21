@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public float speed;
-
     public float jumpSpeed;
-
     public float rotateSpeed;
+    public float gravity;
 
     public Rigidbody2D rb;
     public Transform Sprite;
@@ -70,5 +69,6 @@ public class PlayerBehaviour : MonoBehaviour
     public void Destroy()
     {
         GameOverEvent.Notify(true);
+        Debug.Log("Die");
     }
 }

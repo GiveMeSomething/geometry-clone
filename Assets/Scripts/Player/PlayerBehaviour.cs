@@ -15,7 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerState _state;
 
     public Observable<bool> GameOverEvent = new Observable<bool>();
-    public float totalDistanceTraveled = 0f;
+    public float totalSurviveTime = 0f;
 
     public void TransitionTo(PlayerState state)
     {
@@ -48,20 +48,14 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        float distanceTraveledThisFrame = speed * Time.deltaTime;
-        totalDistanceTraveled += distanceTraveledThisFrame;
-        if (Input.touchCount > 0)
+        totalSurviveTime += Time.deltaTime;
+        if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
         {
-            for (int i = 0; i < Input.touchCount; i++)
             {
-                Touch touch = Input.GetTouch(i);
-                if (touch.phase == TouchPhase.Began)
-                {
-                    HandleUserSingleTouch();
-                }
+                HandleUserSingleTouch();
             }
+            StateByFrame();
         }
-        StateByFrame();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -72,8 +66,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         else
         {
-            // _state.OnCollisionEnter(collision);
-            GameOverEvent.Notify(true);
+            _state.OnCollisionEnter(collision);
         }
     }
 

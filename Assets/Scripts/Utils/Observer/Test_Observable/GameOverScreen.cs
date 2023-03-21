@@ -17,7 +17,7 @@ public class GameOverScreen : MonoBehaviour
     {
         replayButton.onClick.AddListener(() =>
         {
-            onReplayButtonClicked.Notify(true);
+           onReplayButtonClicked.Notify(true);
         });
     }
 
@@ -27,7 +27,7 @@ public class GameOverScreen : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    internal void HideGameOverScreen()
+    public void HideGameOverScreen()
     {
         gameObject.SetActive(false);
     }

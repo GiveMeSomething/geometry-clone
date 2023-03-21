@@ -47,40 +47,15 @@ public class NormalState : PlayerState
     public override void GoThroughPortal()
     {
         _playerBehaviour.TransitionTo(new FlyingState());
+        Vector3 Rotation = _playerBehaviour.Sprite.rotation.eulerAngles;
+        Rotation.z = Mathf.Round(Rotation.z / 90) * 90;
+
+        _playerBehaviour.Sprite.rotation = Quaternion.Euler(Rotation);
     }
 
     public override void OnCollisionEnter(Collision2D collision)
     {
         base.OnCollisionEnter(collision);
-
-        if (collision.transform.CompareTag(GameTag.BuildingBlock))
-        {
-            var shouldDestroy = false;
-            foreach (var contactPoint in collision.contacts)
-            {
-                var normalized = contactPoint.point.normalized;
-
-                // Skip when the contact is above the cube
-                if (Vector3.Dot(normalized, Vector3.up) < 0.5f)
-                {
-                    continue;
-                }
-
-                if (normalized.x < 0f || normalized.y < 0f)
-                {
-                    shouldDestroy = true;
-                    break;
-                }
-            }
-
-            if (shouldDestroy)
-            {
-                // TODO: Remove log later
-                Debug.Log("Game OVer");
-                _playerBehaviour.Destroy();
-                return;
-            }
-        }
 
         if (collision.transform.CompareTag(GameTag.BuildingBlock))
         {

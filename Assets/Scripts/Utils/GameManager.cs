@@ -5,43 +5,39 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public GameOverScreen gameOverScreen;
-    public PlayerBehaviours playerBehaviours;
-    private GameState currentState;
+    [SerializeField]
+    private PlayerBehaviour playerBehaviour;
+    private int score;
 
     private float gameStartTime;
     private float gameEndTime;
-    //score
-    private int score;
+
+    private bool isPlaying = false;
 
     private void Start()
     {
-        currentState = new PlayingState(this);
-        currentState.EnterState();
-        playerBehaviours = FindObjectOfType<PlayerBehaviours>();
-        if (playerBehaviours != null)
-        {
-            playerBehaviours.onGameOver.Subscribe(OnObstacleHit);
-        }
-        if (gameOverScreen != null)
-        {
-            gameOverScreen.onReplayButtonClicked.Subscribe(OnReplayButtonClicked);
-        }
+        playerBehaviour.GameOverEvent.Subscribe(OnObstacleHit);
+        gameOverScreen.onReplayButtonClicked.Subscribe(OnReplayButtonClicked);
         gameStartTime = Time.time;
+        isPlaying = true;
     }
+
+
 
     private void OnReplayButtonClicked(bool repeat)
     {
         if (repeat)
         {
+            Debug.Log("onReplayButtonClicked called with value " + repeat);
             //reset game
             Time.timeScale = 1;
-            //change state
-            currentState = new PlayingState(this);
-            currentState.EnterState();
             //reset score
             score = 0;
             //reset time
             gameStartTime = Time.time;
+            //reset Map
+            //change isPlaying state
+            isPlaying = true;
             //hide game over screen
             gameOverScreen.HideGameOverScreen();
         }
@@ -49,7 +45,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        currentState.Update();
+        if (isPlaying)
+        {
+            float gameTime = Time.time - gameStartTime;
+            float distanceTraveled = playerBehaviour.totalSurviveTime;
+            score = ScoreManager.CalculateScore(distanceTraveled, gameTime);
+            UpdateScore(score);
+        }
     }
 
     private void OnObstacleHit(bool hit)
@@ -59,9 +61,9 @@ public class GameManager : MonoBehaviour
             gameEndTime = Time.time;
             //pause game
             Time.timeScale = 0;
-            //change state
-            currentState = new GameOverState(this);
-            currentState.EnterState();
+            isPlaying = false;
+             // Show the game over screen and pass the player's final score
+            gameOverScreen.ShowGameOverScreen(score);
         }
     }
 

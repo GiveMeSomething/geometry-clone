@@ -30,15 +30,15 @@
         },
         {
             "Id": 7,
-            "SuitableMaps": [ 8 ]
+            "SuitableMaps": [ 5 ]
         },
         {
             "Id": 8,
-            "SuitableMaps": [ 7]
+            "SuitableMaps": [ 7 ]
         },
         {
             "Id": 9,
-            "SuitableMaps": [ 8 ]
+            "SuitableMaps": [ 0 ]
         },
         {
             "Id": 10,

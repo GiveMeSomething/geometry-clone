@@ -23,6 +23,8 @@ public class MapManager : MonoBehaviour
     private const int PLAY_SCREEN_HEIGHT = 8;
     private const int PLAY_SCREEN_WIDTH = 20;
 
+    private const int CHUNK_WIDTH = 10;
+
     // The screen use its center as its pivot,
     // so it goes from -10 -> 10 on x axis and -5 -> 5 on y axis
     // We need to offset those different so we can place blocks at the right place
@@ -52,22 +54,26 @@ public class MapManager : MonoBehaviour
     private List<MapCohesion> _mapCohesions;
 
     // Data for map streaming
+    private Queue<MapPattern> _mapPatternQueue = new();
     private MapPattern _currentMapPattern;
+<<<<<<< Updated upstream
     private Queue<MapPattern> _currentMapQueue;
     private Queue<MapPattern> _nextMapQueue;
 
     // Cache chunks for loaded map patterns
     private Dictionary<int, Queue<MapPattern>> _chunkMap;
 
+=======
+>>>>>>> Stashed changes
     private bool renderable = true;
     private float _mapCoverTime;
 
     private void Awake()
     {
         ICommand loadMapPatternCommand = new LoadMapPattern(SetMapPatterns);
-        ICommand loadMapCohesionCommand = new LoadMapCohesion(SetMapCohesions);
-
         loadMapPatternCommand.Execute();
+
+        ICommand loadMapCohesionCommand = new LoadMapCohesion(SetMapCohesions);
         loadMapCohesionCommand.Execute();
     }
 

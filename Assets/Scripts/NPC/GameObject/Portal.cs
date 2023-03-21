@@ -8,9 +8,11 @@ public class Portal : BuildingBlock
     {
         _flyweight = GetFlyweight(BlockCategory.BuildingBlock);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag.Equals(GameTag.Player)){
+        if (collision.transform.CompareTag(GameTag.Player))
+        {
             collision.gameObject.GetComponent<PlayerBehaviour>().GoThroughPortal();
         }
     }

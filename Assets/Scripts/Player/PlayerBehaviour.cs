@@ -51,16 +51,15 @@ public class PlayerBehaviour : MonoBehaviour
         totalSurviveTime += Time.deltaTime;
         if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
         {
-            {
-                HandleUserSingleTouch();
-            }
-            StateByFrame();
+            HandleUserSingleTouch();
         }
+
+        StateByFrame();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.transform.name.Equals(GameTag.Portal))
+        if (collision.transform.CompareTag(GameTag.Portal))
         {
             GoThroughPortal();
         }

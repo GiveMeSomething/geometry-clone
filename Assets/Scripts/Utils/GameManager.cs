@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
         //hide game over screen
         gameOverScreen.HideGameOverScreen();
         // Reload the current scene
-        EditorSceneManager.LoadScene(EditorSceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
+
         }
     }
 

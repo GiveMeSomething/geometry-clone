@@ -10,16 +10,12 @@ public class GameManager : MonoBehaviour
     private PlayerBehaviour playerBehaviour;
     private int score;
 
-    private float gameStartTime;
-    private float gameEndTime;
-
     private bool isPlaying = false;
 
     private void Start()
     {
         playerBehaviour.GameOverEvent.Subscribe(OnObstacleHit);
         gameOverScreen.onReplayButtonClicked.Subscribe(OnReplayButtonClicked);
-        gameStartTime = Time.time;
         isPlaying = true;
     }
 
@@ -30,9 +26,6 @@ public class GameManager : MonoBehaviour
              Debug.Log("onReplayButtonClicked called with value " + repeat);
         //reset score
         score = 0;
-        //reset time
-        gameStartTime = Time.time;
-        //reset Map
         //change isPlaying state
         isPlaying = true;
         //hide game over screen
@@ -48,9 +41,8 @@ public class GameManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            float gameTime = Time.time - gameStartTime;
             float distanceTraveled = playerBehaviour.totalSurviveTime;
-            score = Mathf.RoundToInt(distanceTraveled / gameTime);
+            score = Mathf.RoundToInt(distanceTraveled);
             UpdateScore(score);
         }
     }
@@ -59,7 +51,6 @@ public class GameManager : MonoBehaviour
     {
         if (hit)
         {
-            gameEndTime = Time.time;
             //pause game
             Time.timeScale = 0;
             isPlaying = false;

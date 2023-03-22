@@ -255,6 +255,37 @@ MonoBehaviour:
   _slabPrefab: {fileID: 8627949627266174454, guid: d5e52c4c23c8a4ffbbf594390aae2224, type: 3}
   _spikePrefab: {fileID: 806984675358935825, guid: f442c8d5863a74eb4854c17030aaedd9, type: 3}
   _portalPrefab: {fileID: 2127002361053527565, guid: 3c197aede2f43b84faafce735225be1a, type: 3}
+--- !u!1 &376359283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 376359284}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &376359284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376359283}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1948092954}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &930686734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,6 +431,7 @@ Transform:
   m_Children:
   - {fileID: 1787590715}
   - {fileID: 228509323}
+  - {fileID: 376359284}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

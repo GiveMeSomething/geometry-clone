@@ -72,6 +72,5 @@ public class PlayerBehaviour : MonoBehaviour
     public void Destroy()
     {
         GameOverEvent.Notify(true);
-        Debug.Log("Die");
     }
 }

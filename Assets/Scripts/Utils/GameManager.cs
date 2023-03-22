@@ -28,18 +28,18 @@ public class GameManager : MonoBehaviour
     {
         if (repeat)
         {
-            Debug.Log("onReplayButtonClicked called with value " + repeat);
-            //reset game
-            Time.timeScale = 1;
-            //reset score
-            score = 0;
-            //reset time
-            gameStartTime = Time.time;
-            //reset Map
-            //change isPlaying state
-            isPlaying = true;
-            //hide game over screen
-            gameOverScreen.HideGameOverScreen();
+             Debug.Log("onReplayButtonClicked called with value " + repeat);
+        //reset score
+        score = 0;
+        //reset time
+        gameStartTime = Time.time;
+        //reset Map
+        //change isPlaying state
+        isPlaying = true;
+        //hide game over screen
+        gameOverScreen.HideGameOverScreen();
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

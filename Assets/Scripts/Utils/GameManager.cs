@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
-using System;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
     }
 
-
-
     private void OnReplayButtonClicked(bool repeat)
     {
         if (repeat)
@@ -42,6 +40,7 @@ public class GameManager : MonoBehaviour
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
+
         }
     }
 

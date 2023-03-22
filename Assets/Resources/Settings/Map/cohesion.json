@@ -10,7 +10,7 @@
         },
         {
             "Id": 2,
-            "SuitableMaps": [ ]
+            "SuitableMaps": [ 2 ]
         },
         {
             "Id": 3,
@@ -46,7 +46,7 @@
         },
         {
             "Id": 11,
-            "SuitableMaps": [ 10, 11, 11, 11 ]
+            "SuitableMaps": [ 11, 11, 11, 11, 10 ]
         }
     ]
 }

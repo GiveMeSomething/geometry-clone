@@ -11,7 +11,7 @@ public class ResourceLoader
     private const string MAP_PATTERN_FILE = "Settings/Map/map";
 
     // Change to Settings/Map/cohesion when game is ready
-    private const string MAP_COHESION_FILE = "Settings/Map/cohesion.dev";
+    private const string MAP_COHESION_FILE = "Settings/Map/cohesion";
 
     // TODO: Check if this can be loaded asynchronusly
     private static T LoadJsonTextResource<T>(string filePath)

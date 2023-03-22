@@ -188,7 +188,9 @@ public class MapManager : MonoBehaviour
     {
         // Calculate map pattern from current map pattern
         int nextMapId = 0;
+
         var currentMapCohesion = _mapCohesions.Find(mc => mc.Id == _currentMapPattern.Id);
+        Debug.Log(_currentMapPattern.Id);
 
         // Random the next map patterns from the suitable map pool
         // If current cohesion is not set, default the next pattern to Id 0 (null pattern)

@@ -235,9 +235,10 @@ public class MapManager : MonoBehaviour
             remainingSize -= currentChunkSize;
 
             // Calculate chunk start index based on chunk index
-            var chunkStartIndex = currentChunkSize == CHUNK_SIZE ?
-                i * CHUNK_SIZE :
-                (i - 1) * CHUNK_SIZE + currentChunkSize;
+            // var chunkStartIndex = currentChunkSize == CHUNK_SIZE ?
+            //     i * CHUNK_SIZE :
+            //     (i - 1) * CHUNK_SIZE + currentChunkSize;
+            var chunkStartIndex = i * CHUNK_SIZE;
 
             var data = new List<int>();
             for (int a = 0; a < numberOfRow; a++)

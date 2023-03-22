@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
-using System;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +23,6 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
     }
 
-
-
     private void OnReplayButtonClicked(bool repeat)
     {
         if (repeat)
@@ -39,7 +38,7 @@ public class GameManager : MonoBehaviour
         //hide game over screen
         gameOverScreen.HideGameOverScreen();
         // Reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        EditorSceneManager.LoadScene(EditorSceneManager.GetActiveScene().name);
         }
     }
 

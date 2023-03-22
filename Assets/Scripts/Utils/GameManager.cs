@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         {
             float gameTime = Time.time - gameStartTime;
             float distanceTraveled = playerBehaviour.totalSurviveTime;
-            score = ScoreManager.CalculateScore(distanceTraveled, gameTime);
+            score = Mathf.RoundToInt(distanceTraveled / gameTime);
             UpdateScore(score);
         }
     }
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             //pause game
             Time.timeScale = 0;
             isPlaying = false;
-             // Show the game over screen and pass the player's final score
+            // Show the game over screen and pass the player's final score
             gameOverScreen.ShowGameOverScreen(score);
         }
     }
